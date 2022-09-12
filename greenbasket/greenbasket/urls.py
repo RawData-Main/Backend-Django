@@ -18,6 +18,32 @@ from django.conf import settings
 from django .conf .urls.static import static
 from django.urls import path
 from django.urls import include
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+
+
+# User.objects.get(username='report_user')
+# # current_user = request.user
+# print(u)
+# if str(u) == 'report_user':
+# # if current_user.username == 'report_user':
+#     admin.site.site_header = "Green Basket Report User"
+#     admin.site.site_title = "Report User Portal"
+#     admin.site.index_title = "Welcome to Green Basket Reports"
+
+# def sample_view(request):
+#     current_user = request.user
+#     if current_user.username == 'report_user':
+#         admin.site.site_header = "Green Basket Report User"
+#         admin.site.site_title = "Report User Portal"
+#         admin.site.index_title = "Welcome to Green Basket Reports"
+#     else:
+#         admin.site.site_header = "Green Basket Admin"
+#         admin.site.site_title = "Green Basket Admin Portal"
+#         admin.site.index_title = "Welcome to Green Basket Portal"
+admin.site.site_header = "Green Basket Admin"
+admin.site.site_title = "Green Basket Admin Portal"
+admin.site.index_title = "Welcome to Green Basket Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,8 +51,8 @@ urlpatterns = [
     path('product/', include('product.api.urls')),
     path('user/', include('user.api.urls')),
     path('cart/', include('cart.urls')),
-    
 ]
+
 
 
 if settings.DEBUG:

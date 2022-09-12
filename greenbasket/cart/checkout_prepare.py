@@ -18,6 +18,15 @@ class CartCheckout:
 
         self.calculate_total_amount()
         self.checkout_details()
+        
+        ########### To decrease ordered item from stock ###########
+        
+        # for item in CartItem:
+        #     ProductModel.objects.filter(id=item.id).first()
+        #     ProductModel.stock = ProductModel.stock - item.product_quantity 
+        #     ProductModel.save()
+        #     CartItem.objects.filter(user=request.user).delete()
+
         return self.checkout_details
 
 

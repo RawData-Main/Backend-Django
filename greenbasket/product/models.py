@@ -50,7 +50,7 @@ class ProductModel(models.Model):
 
 class PlantModel(models.Model):
     plant_name = models.ForeignKey(ProductModel,on_delete=models.CASCADE, related_name='plant_name')
-    type = models.CharField(max_length=60)
+    plant_type = models.CharField(max_length=60)
     propagation = models.CharField(max_length=60)
     plant_image = models.ForeignKey(ProductModel,on_delete=models.CASCADE,related_name='plant_image')
     plant_desc = models.ForeignKey(ProductModel,on_delete=models.CASCADE,related_name='plant_desc')

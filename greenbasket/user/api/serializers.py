@@ -35,10 +35,6 @@ class ReportUserSignupSerializer(serializers.ModelSerializer):
 
 
 
-
-
-
-
 class CoustomerSignupSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type":"password"},write_only = True)
     class Meta:

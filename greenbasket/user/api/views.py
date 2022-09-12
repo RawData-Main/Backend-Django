@@ -1,3 +1,6 @@
+from rest_framework.generics import GenericAPIView
+from rest_framework.response import Response
+from .serializers import *
 from django.http import request
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
@@ -8,6 +11,11 @@ from rest_framework.views import APIView
 from .permissions import IsReportUser, IsCustomerUser
 from django.contrib.auth import logout
 from django.views.generic import View
+from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
+
+ 
+
 
 
 class ReportUserSignupView(generics.GenericAPIView):
@@ -50,29 +58,29 @@ class CustomAuthToken(ObtainAuthToken):
             'is_customer':user.is_customer
         })
     
-# class LogoutView(View):
-#     def get(self, request):
-#         logout(request)
 
 
-#-------------------------------------------------------------#
+#--------------------LOGOUT----------------------#
 
-# def LogoutView(request,format=None):
-#     logout(request)
+class LogoutView(GenericAPIView):
+    def get(self, request, format=None):
+            # simply delete the token to force a login
+            if request.user.is_authenticated:
+                request.user.auth_token.delete()
+            if request.user.is_authenticated:
+                print("logout failed")
+            else:
+                print("logout success")
+            # return render(request, "home.html")
+            return Response({"status": "log out success"})
 
-#----------------------------------------------------#
-
-class LogoutView(APIView):
-    def post(self, request, format=None):
-        request.user.auth_token.delete()
-        logout(request)
-        return Response(status=status.HTTP_200_OK)
-
+  
 
 
 class ReportUserOnlyView(generics.RetrieveAPIView):
     permission_classes=[permissions.IsAuthenticated&IsReportUser]
     serializer_class=UserSerializer
+    authentication_classes = (TokenAuthentication)
 
     def get_object(self):
         return self.request.user
@@ -80,6 +88,7 @@ class ReportUserOnlyView(generics.RetrieveAPIView):
 class CustomerOnlyView(generics.RetrieveAPIView):
     permission_classes=[permissions.IsAuthenticated&IsCustomerUser]
     serializer_class=UserSerializer
+    authentication_classes = (TokenAuthentication)
 
     def get_object(self):
         return self.request.user
